@@ -42,8 +42,3 @@ The application follows a **Clean Architecture** approach using the **MERN** sta
 *   **State Pattern**: The `Project` entity uses a state pattern logic to validate transitions (e.g., ensuring a project cannot go from `OPEN` to `COMPLETED` without `ASSIGNED`).
 *   **Strategy Pattern**: Potential use for `BidRankingStrategy` (e.g., by price, by rating, or by time) to sort bids for the client.
 
-## Why This is Backend-Focused
-*   **Logic over UI**: The complexity lies in the validation rules (e.g., "Freelancer cannot bid if they have >3 active projects"), not the UI components.
-*   **Concurrency**: Handling the "Accept Bid" action requires locking the project to prevent double-assignment.
-*   **Security**: All authorization logic is enforced on the server, not just hidden on the client.
-*   **Scalability**: The separation of concerns allows the "Bidding Engine" to scale independently from the "User Profile" service in a microservices migration.
