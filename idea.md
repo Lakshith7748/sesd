@@ -1,7 +1,6 @@
 # FreelanceMarket — Multi-Role Project Bidding Platform
 
-## Project Name
-**FreelanceMarket**
+
 
 ## Problem Statement
 Clients need a reliable way to post short-term projects and hire skilled freelancers through a competitive bidding process. The core challenge is enforcing strict business rules: only one freelancer per project, preventing duplicate bids, managing project state transitions, and ensuring bid acceptance is atomic. A poorly designed backend leads to race conditions, unauthorized actions, and broken workflows.
@@ -63,18 +62,10 @@ HTTP Request
 | **Strategy** | `BidRankingStrategy` | Sorts bids by price/date without changing service logic |
 | **Middleware** | `authenticate`, `authorize(role)` | Reusable auth/role guards on routes |
 
-<<<<<<< HEAD
-=======
-## Why Backend-Focused
-- All authorization is server-enforced (not client-side)
-- Bid acceptance uses a MongoDB session/transaction to prevent double-assignment
-- State machine prevents illegal project transitions
-- Repository pattern enables unit-testable services (mock repos)
-- Factory pattern demonstrates OOP polymorphism at object creation
 
 ## Tech Stack
 - **Runtime**: Node.js + Express
 - **Database**: MongoDB + Mongoose
 - **Auth**: JWT (jsonwebtoken) + bcrypt
 - **Frontend**: React (minimal — dashboard views only)
->>>>>>> 84d85ea (file updates)
+
