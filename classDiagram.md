@@ -1,104 +1,280 @@
 ```mermaid
 classDiagram
-    %% Core Domain Models
-    class Order {
-        +String id
-        +String customerId
-        +OrderStatus status
-        +List~OrderItem~ items
-        +Address shippingAddress
-        +PaymentInfo payment
-        +calculateTotal()
-        +cancel()
-    }
+    %% ══════════════════════════════════════
+    %% DOMAIN MODELS (Mongoose Schemas)
+    %% ══════════════════════════════════════
 
-    class OrderItem {
-        +String productId
-        +String sku
-        +Integer quantity
-        +Decimal price
-    }
-
-    class Inventory {
-        +String warehouseId
-        +String productId
-        +Integer quantityAvailable
-        +Integer quantityReserved
-        +reserve(qty)
-        +release(qty)
-    }
-
-    class Warehouse {
-        +String id
+    class User {
+        <<abstract>>
+        +ObjectId _id
         +String name
-        +Location location
-        +List~String~ handledSkus
+        +String email
+        +String passwordHash
+        +String role
+        +Boolean isBlocked
+        +Date createdAt
+        +comparePassword(plain) Boolean
     }
 
-    %% Interfaces / Contracts
-    class IOrderRepository {
+    class Client {
+        +createProject(data) Project
+        +acceptBid(projectId, bidId) void
+        +markCompleted(projectId) void
+    }
+
+    class Freelancer {
+        +String skills
+        +placeBid(projectId, data) Bid
+        +withdrawBid(bidId) void
+        +submitWork(projectId, url) void
+    }
+
+    class Admin {
+        +blockUser(userId) void
+        +resolveDispute(disputeId, resolution) void
+    }
+
+    class Project {
+        +ObjectId _id
+        +String title
+        +String description
+        +Number budget
+        +Date deadline
+        +String status
+        +ObjectId clientId
+        +ObjectId assignedFreelancerId
+        +ObjectId acceptedBidId
+        +Date createdAt
+        +canEdit() Boolean
+        +canDelete() Boolean
+        +transitionTo(newStatus) void
+    }
+
+    class Bid {
+        +ObjectId _id
+        +ObjectId projectId
+        +ObjectId freelancerId
+        +Number amount
+        +String proposal
+        +String status
+        +Date createdAt
+        +withdraw() void
+    }
+
+    class Dispute {
+        +ObjectId _id
+        +ObjectId projectId
+        +ObjectId raisedBy
+        +String reason
+        +String status
+        +String resolution
+        +Date createdAt
+    }
+
+    %% ══════════════════════════════════════
+    %% REPOSITORY INTERFACES
+    %% ══════════════════════════════════════
+
+    class IUserRepository {
         <<interface>>
-        +save(Order)
-        +findById(id)
-        +updateStatus(id, status)
+        +findById(id) User
+        +findByEmail(email) User
+        +save(user) User
+        +setBlocked(id, flag) void
+        +findAll() User[]
     }
 
-    class ISourcingStrategy {
+    class IProjectRepository {
         <<interface>>
-        +findOptimalWarehouse(Order, List~Warehouse~) Warehouse
+        +findById(id) Project
+        +findAllOpen() Project[]
+        +save(project) Project
+        +update(id, data, session) Project
+        +delete(id) void
     }
 
-    %% Service Layer
-    class OrderService {
-        -IOrderRepository orderRepo
-        -InventoryService inventoryService
-        -SourcingService sourcingService
-        +createOrder(CreateOrderDTO) Order
-        +cancelOrder(orderId)
-        +getOrderStatus(orderId)
+    class IBidRepository {
+        <<interface>>
+        +findById(id) Bid
+        +findByProject(projectId) Bid[]
+        +findByFreelancerAndProject(fId, pId) Bid
+        +save(bid) Bid
+        +update(id, data) Bid
     }
 
-    class InventoryService {
-        -InventoryRepository inventoryRepo
-        +checkStock(sku, qty)
-        +reserveStock(sku, qty, warehouseId)
-        +releaseStock(sku, qty, warehouseId)
+    %% ══════════════════════════════════════
+    %% REPOSITORY IMPLEMENTATIONS
+    %% ══════════════════════════════════════
+
+    class MongoUserRepository {
+        +findById(id) User
+        +findByEmail(email) User
+        +save(user) User
+        +setBlocked(id, flag) void
+        +findAll() User[]
     }
 
-    class SourcingService {
-        -ISourcingStrategy strategy
-        +routeOrder(Order) Warehouse
+    class MongoProjectRepository {
+        +findById(id) Project
+        +findAllOpen() Project[]
+        +save(project) Project
+        +update(id, data, session) Project
+        +delete(id) void
     }
 
-    %% Strategy Implementations
-    class DistanceBasedStrategy {
-        +findOptimalWarehouse()
-    }
-    
-    class InventoryLevelStrategy {
-        +findOptimalWarehouse()
-    }
-
-    class LowestCostStrategy {
-        +findOptimalWarehouse()
+    class MongoBidRepository {
+        +findById(id) Bid
+        +findByProject(projectId) Bid[]
+        +findByFreelancerAndProject(fId, pId) Bid
+        +save(bid) Bid
+        +update(id, data) Bid
     }
 
-    %% API Layer
-    class OrderController {
-        -OrderService orderService
-        +createOrder(req, res)
-        +getOrder(req, res)
+    %% ══════════════════════════════════════
+    %% FACTORY
+    %% ══════════════════════════════════════
+
+    class UserFactory {
+        <<static>>
+        +create(role, data) Client | Freelancer | Admin
     }
 
-    %% Relationships
-    Order *-- OrderItem : contains
-    OrderService --> IOrderRepository : uses
-    OrderService --> InventoryService : uses
-    OrderService --> SourcingService : uses
-    SourcingService --> ISourcingStrategy : uses
-    ISourcingStrategy <|.. DistanceBasedStrategy : implements
-    ISourcingStrategy <|.. InventoryLevelStrategy : implements
-    ISourcingStrategy <|.. LowestCostStrategy : implements
-    OrderController --> OrderService : calls
-    InventoryService --> Inventory : manages
+    %% ══════════════════════════════════════
+    %% STRATEGY (Bid Ranking)
+    %% ══════════════════════════════════════
+
+    class IBidRankingStrategy {
+        <<interface>>
+        +rank(bids) Bid[]
+    }
+
+    class ByPriceAscending {
+        +rank(bids) Bid[]
+    }
+
+    class ByDateAscending {
+        +rank(bids) Bid[]
+    }
+
+    %% ══════════════════════════════════════
+    %% SERVICE LAYER
+    %% ══════════════════════════════════════
+
+    class AuthService {
+        -IUserRepository userRepo
+        +register(role, data) User
+        +login(email, password) String
+    }
+
+    class ProjectService {
+        -IProjectRepository projectRepo
+        -IBidRepository bidRepo
+        +createProject(clientId, data) Project
+        +editProject(clientId, projectId, data) Project
+        +deleteProject(clientId, projectId) void
+        +getOpenProjects() Project[]
+        +acceptBid(clientId, projectId, bidId) Project
+        +markCompleted(clientId, projectId) Project
+    }
+
+    class BidService {
+        -IBidRepository bidRepo
+        -IProjectRepository projectRepo
+        -IBidRankingStrategy strategy
+        +placeBid(freelancerId, projectId, data) Bid
+        +withdrawBid(freelancerId, bidId) void
+        +getBidsForProject(clientId, projectId) Bid[]
+    }
+
+    class AdminService {
+        -IUserRepository userRepo
+        -IProjectRepository projectRepo
+        +blockUser(userId) void
+        +getAllUsers() User[]
+        +getAllProjects() Project[]
+        +resolveDispute(disputeId, resolution) void
+    }
+
+    %% ══════════════════════════════════════
+    %% CONTROLLER LAYER
+    %% ══════════════════════════════════════
+
+    class AuthController {
+        -AuthService authService
+        +register(req, res) void
+        +login(req, res) void
+    }
+
+    class ProjectController {
+        -ProjectService projectService
+        +createProject(req, res) void
+        +editProject(req, res) void
+        +deleteProject(req, res) void
+        +getOpenProjects(req, res) void
+        +acceptBid(req, res) void
+        +markCompleted(req, res) void
+    }
+
+    class BidController {
+        -BidService bidService
+        +placeBid(req, res) void
+        +withdrawBid(req, res) void
+        +getBidsForProject(req, res) void
+    }
+
+    class AdminController {
+        -AdminService adminService
+        +blockUser(req, res) void
+        +getAllUsers(req, res) void
+        +getAllProjects(req, res) void
+        +resolveDispute(req, res) void
+    }
+
+    %% ══════════════════════════════════════
+    %% RELATIONSHIPS
+    %% ══════════════════════════════════════
+
+    %% Inheritance
+    User <|-- Client
+    User <|-- Freelancer
+    User <|-- Admin
+
+    %% Factory creates role-specific users
+    UserFactory ..> Client : creates
+    UserFactory ..> Freelancer : creates
+    UserFactory ..> Admin : creates
+
+    %% Domain associations
+    Client "1" --> "0..*" Project : posts
+    Freelancer "1" --> "0..*" Bid : places
+    Project "1" --> "0..*" Bid : receives
+    Project "1" --> "0..1" Dispute : has
+
+    %% Repository interface → implementation
+    IUserRepository <|.. MongoUserRepository
+    IProjectRepository <|.. MongoProjectRepository
+    IBidRepository <|.. MongoBidRepository
+
+    %% Strategy
+    IBidRankingStrategy <|.. ByPriceAscending
+    IBidRankingStrategy <|.. ByDateAscending
+
+    %% Controllers → Services
+    AuthController --> AuthService
+    ProjectController --> ProjectService
+    BidController --> BidService
+    AdminController --> AdminService
+
+    %% Services → Repositories
+    AuthService --> IUserRepository
+    ProjectService --> IProjectRepository
+    ProjectService --> IBidRepository
+    BidService --> IBidRepository
+    BidService --> IProjectRepository
+    BidService --> IBidRankingStrategy
+    AdminService --> IUserRepository
+    AdminService --> IProjectRepository
+
+    %% Services → Factory
+    AuthService --> UserFactory
 ```
