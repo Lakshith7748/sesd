@@ -1,108 +1,63 @@
 ```mermaid
 erDiagram
-    %% User Management
-    User {
+    %% ══════════════════════════════════════
+    %% COLLECTIONS
+    %% ══════════════════════════════════════
+
+    users {
         ObjectId _id PK
-        String email
-        String passwordHash
-        String role "Admin, Merchant, WH_Manager"
-        Date createdAt
+        string name
+        string email UK
+        string passwordHash
+        string role "CLIENT | FREELANCER | ADMIN"
+        boolean isBlocked
+        string skills "Freelancer only"
+        date createdAt
     }
 
-    %% Catalog & Inventory
-    Product {
+    projects {
         ObjectId _id PK
-        String sku UK
-        String name
-        Decimal price
-        Int weight
-        String dimensions
-        Boolean isActive
+        string title
+        string description
+        number budget
+        date deadline
+        string status "OPEN | ASSIGNED | IN_PROGRESS | COMPLETED"
+        ObjectId clientId FK
+        ObjectId assignedFreelancerId FK "nullable"
+        ObjectId acceptedBidId FK "nullable"
+        date createdAt
     }
 
-    Warehouse {
+    bids {
         ObjectId _id PK
-        String code UK "WH-NY, WH-CA"
-        String name
-        String address
-        Boolean isActive
-        String[] supportedShippingMethods
+        ObjectId projectId FK
+        ObjectId freelancerId FK
+        number amount
+        string proposal
+        string status "PENDING | ACCEPTED | REJECTED | WITHDRAWN"
+        date createdAt
     }
 
-    Inventory {
+    disputes {
         ObjectId _id PK
-        ObjectId productId FK
-        ObjectId warehouseId FK
-        Int quantityAvailable
-        Int quantityReserved
-        Int quantityDamaged
-        Date lastUpdated
+        ObjectId projectId FK
+        ObjectId raisedBy FK
+        string reason
+        string status "OPEN | UNDER_REVIEW | RESOLVED"
+        string resolution "nullable"
+        date createdAt
     }
 
-    %% Order Management
-    Order {
-        ObjectId _id PK
-        String orderNumber UK
-        ObjectId customerId FK
-        Date orderDate
-        String status "CREATED, ALLOCATED, SHIPPED, CANCELLED"
-        Decimal totalAmount
-        String currency
-        Object shippingAddress
-    }
+    %% ══════════════════════════════════════
+    %% RELATIONSHIPS
+    %% ══════════════════════════════════════
 
-    OrderItem {
-        ObjectId _id PK
-        ObjectId orderId FK
-        ObjectId productId FK
-        String sku
-        Int quantity
-        Decimal unitPrice
-        String status "PENDING, ALLOCATED, BACKORDERED"
-    }
+    users ||--o{ projects : "posts (as Client)"
+    users ||--o{ bids : "places (as Freelancer)"
+    users ||--o{ disputes : "raises"
 
-    %% Fulfillment
-    Shipment {
-        ObjectId _id PK
-        ObjectId orderId FK
-        ObjectId warehouseId FK
-        String trackingNumber
-        String carrier
-        Date shippedDate
-        String status
-    }
-
-    ShipmentItem {
-        ObjectId _id PK
-        ObjectId shipmentId FK
-        ObjectId orderItemId FK
-        Int quantity
-    }
-
-    %% Finance
-    Transaction {
-        ObjectId _id PK
-        ObjectId orderId FK
-        String type "AUTH, CAPTURE, REFUND"
-        Decimal amount
-        String status "SUCCESS, FAILED"
-        String gatewayReference
-        Date createdAt
-    }
-
-    %% Relationships
-    User ||--o{ Order : places
-    User ||--o{ Transaction : initiates
-    
-    Order ||--|{ OrderItem : contains
-    Order ||--|{ Transaction : has
-    Order ||--o{ Shipment : fulfills
-
-    Product ||--|{ Inventory : stocked_at
-    Warehouse ||--|{ Inventory : holds
-    Product ||--o{ OrderItem : references
-
-    Shipment ||--|{ ShipmentItem : contains
-    OrderItem ||--o{ ShipmentItem : packed_in
-    Warehouse ||--o{ Shipment : origins_from
+    projects ||--o{ bids : "receives"
+    projects ||--o| bids : "accepts one"
+    projects ||--o| disputes : "has one"
+    projects }o--|| users : "assigned to Freelancer"
 ```
