@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema, Types } from 'mongoose';
-import { ProjectStatus } from '../types';
-import { AppError } from '../utils/AppError';
+import mongoose, { Document, Schema, Types } from "mongoose";
+import { ProjectStatus } from "../types";
+import { AppError } from "../utils/AppError";
 
 const ALLOWED_TRANSITIONS: Record<ProjectStatus, ProjectStatus[]> = {
   [ProjectStatus.OPEN]: [ProjectStatus.ASSIGNED],
@@ -30,12 +30,20 @@ const ProjectSchema = new Schema<IProject>(
     description: { type: String, required: true },
     budget: { type: Number, required: true, min: 0 },
     deadline: { type: Date, required: true },
-    status: { type: String, enum: Object.values(ProjectStatus), default: ProjectStatus.OPEN },
-    clientId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    assignedFreelancerId: { type: Schema.Types.ObjectId, ref: 'User', default: null },
-    acceptedBidId: { type: Schema.Types.ObjectId, ref: 'Bid', default: null },
+    status: {
+      type: String,
+      enum: Object.values(ProjectStatus),
+      default: ProjectStatus.OPEN,
+    },
+    clientId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    assignedFreelancerId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    acceptedBidId: { type: Schema.Types.ObjectId, ref: "Bid", default: null },
   },
-  { timestamps: { createdAt: 'createdAt', updatedAt: false } }
+  { timestamps: { createdAt: "createdAt", updatedAt: false } },
 );
 
 ProjectSchema.methods.canEdit = function (): boolean {
@@ -49,10 +57,13 @@ ProjectSchema.methods.canDelete = function (): boolean {
 ProjectSchema.methods.transitionTo = function (newStatus: ProjectStatus): void {
   const allowed = ALLOWED_TRANSITIONS[this.status as ProjectStatus];
   if (!allowed.includes(newStatus)) {
-    throw new AppError(`Cannot transition project from ${this.status} to ${newStatus}`, 400);
+    throw new AppError(
+      `Cannot transition project from ${this.status} to ${newStatus}`,
+      400,
+    );
   }
   this.status = newStatus;
 };
 
-const ProjectModel = mongoose.model<IProject>('Project', ProjectSchema);
+const ProjectModel = mongoose.model<IProject>("Project", ProjectSchema);
 export default ProjectModel;

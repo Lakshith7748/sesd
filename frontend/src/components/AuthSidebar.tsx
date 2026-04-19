@@ -1,24 +1,26 @@
-import React from 'react';
+import React from "react";
 
 interface AuthSidebarProps {
-  type: 'login' | 'register';
+  type: "login" | "register";
 }
 
 const content = {
   login: {
     tagline: (
       <>
-        Find talent.<br />
-        <span>Win projects.</span><br />
+        Find talent.
+        <br />
+        <span>Win projects.</span>
+        <br />
         Build together.
       </>
     ),
-    sub: 'The modern marketplace connecting clients who have ideas with freelancers who have the skills to bring them to life.',
+    sub: "The modern marketplace connecting clients who have ideas with freelancers who have the skills to bring them to life.",
     features: [
       {
         icon: <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />,
-        title: 'Instant onboarding',
-        sub: 'Be live in minutes with role-based flows',
+        title: "Instant onboarding",
+        sub: "Be live in minutes with role-based flows",
       },
       {
         icon: (
@@ -28,8 +30,8 @@ const content = {
             <circle cx="12" cy="12" r="2" />
           </>
         ),
-        title: 'Transparent bidding',
-        sub: 'Real-time bids with clear project status',
+        title: "Transparent bidding",
+        sub: "Real-time bids with clear project status",
       },
       {
         icon: (
@@ -38,22 +40,25 @@ const content = {
             <polyline points="9 12 11 14 15 10" />
           </>
         ),
-        title: 'Enterprise-grade security',
-        sub: 'JWT auth, role-based access, production-ready',
+        title: "Enterprise-grade security",
+        sub: "JWT auth, role-based access, production-ready",
       },
     ],
-    quote: '"FreelanceMarket cut our hiring time in half. The bidding system is transparent and the talent pool is exceptional."',
-    author: '— Sarah K., Product Lead at Nexify',
+    quote:
+      '"FreelanceMarket cut our hiring time in half. The bidding system is transparent and the talent pool is exceptional."',
+    author: "— Sarah K., Product Lead at Nexify",
   },
   register: {
     tagline: (
       <>
-        Start your<br />
-        <span>journey</span><br />
+        Start your
+        <br />
+        <span>journey</span>
+        <br />
         today.
       </>
     ),
-    sub: 'Join 50,000+ freelancers and clients already building the future of work on FreelanceMarket.',
+    sub: "Join 50,000+ freelancers and clients already building the future of work on FreelanceMarket.",
     features: [
       {
         icon: (
@@ -64,8 +69,8 @@ const content = {
             <line x1="22" y1="11" x2="16" y2="11" />
           </>
         ),
-        title: 'Free to join',
-        sub: 'No credit card required — start immediately',
+        title: "Free to join",
+        sub: "No credit card required — start immediately",
       },
       {
         icon: (
@@ -74,8 +79,8 @@ const content = {
             <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
           </>
         ),
-        title: 'Post or bid on projects',
-        sub: 'Clients post, freelancers bid — simple workflow',
+        title: "Post or bid on projects",
+        sub: "Clients post, freelancers bid — simple workflow",
       },
       {
         icon: (
@@ -85,12 +90,13 @@ const content = {
             <line x1="6" y1="20" x2="6" y2="14" />
           </>
         ),
-        title: 'Track everything live',
-        sub: 'Real-time dashboards for bids, projects & payouts',
+        title: "Track everything live",
+        sub: "Real-time dashboards for bids, projects & payouts",
       },
     ],
-    quote: '"I landed my first client within 24 hours of signing up. The platform just works."',
-    author: '— James R., Full-Stack Developer',
+    quote:
+      '"I landed my first client within 24 hours of signing up. The platform just works."',
+    author: "— James R., Full-Stack Developer",
   },
 };
 
@@ -112,7 +118,16 @@ export default function AuthSidebar({ type }: AuthSidebarProps) {
         {data.features.map((feature, i) => (
           <div key={i} className="auth-left-feature">
             <div className="auth-left-feature-dot">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 {feature.icon}
               </svg>
             </div>

@@ -1,27 +1,27 @@
 export enum UserRole {
-  CLIENT = 'CLIENT',
-  FREELANCER = 'FREELANCER',
-  ADMIN = 'ADMIN',
+  CLIENT = "CLIENT",
+  FREELANCER = "FREELANCER",
+  ADMIN = "ADMIN",
 }
 
 export enum ProjectStatus {
-  OPEN = 'OPEN',
-  ASSIGNED = 'ASSIGNED',
-  IN_PROGRESS = 'IN_PROGRESS',
-  COMPLETED = 'COMPLETED',
+  OPEN = "OPEN",
+  ASSIGNED = "ASSIGNED",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
 }
 
 export enum BidStatus {
-  PENDING = 'PENDING',
-  ACCEPTED = 'ACCEPTED',
-  REJECTED = 'REJECTED',
-  WITHDRAWN = 'WITHDRAWN',
+  PENDING = "PENDING",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
+  WITHDRAWN = "WITHDRAWN",
 }
 
 export enum DisputeStatus {
-  OPEN = 'OPEN',
-  UNDER_REVIEW = 'UNDER_REVIEW',
-  RESOLVED = 'RESOLVED',
+  OPEN = "OPEN",
+  UNDER_REVIEW = "UNDER_REVIEW",
+  RESOLVED = "RESOLVED",
 }
 
 export interface RegisterDTO {

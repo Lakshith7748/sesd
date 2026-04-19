@@ -1,4 +1,4 @@
-import { IDispute } from '../../models/Dispute';
+import { IDispute } from "../../models/Dispute";
 
 export interface IDisputeRepository {
   findById(id: string): Promise<IDispute | null>;

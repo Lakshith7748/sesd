@@ -1,35 +1,45 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { authAPI } from '../services/api';
-import { UserRole } from '../types';
-import { useAuth } from '../context/AuthContext';
-import AuthSidebar from '../components/AuthSidebar';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { authAPI } from "../services/api";
+import { UserRole } from "../types";
+import { useAuth } from "../context/AuthContext";
+import AuthSidebar from "../components/AuthSidebar";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [role, setRole] = useState<UserRole>('CLIENT');
-  const [form, setForm] = useState({ name: '', email: '', password: '', skills: '' });
-  const [error, setError] = useState('');
+  const [role, setRole] = useState<UserRole>("CLIENT");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    skills: "",
+  });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
+  const set =
+    (k: string) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
     try {
       await authAPI.register({ ...form, role });
-      const res = await authAPI.login({ email: form.email, password: form.password });
+      const res = await authAPI.login({
+        email: form.email,
+        password: form.password,
+      });
       const token: string = res.data.data.token;
       login(token, form.name);
-      if (role === 'CLIENT') navigate('/client');
-      else if (role === 'FREELANCER') navigate('/freelancer');
-      else navigate('/admin');
+      if (role === "CLIENT") navigate("/client");
+      else if (role === "FREELANCER") navigate("/freelancer");
+      else navigate("/admin");
     } catch (err: any) {
-      setError(err.response?.data?.message ?? 'Registration failed');
+      setError(err.response?.data?.message ?? "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -66,14 +76,14 @@ export default function RegisterPage() {
           <div className="form-group">
             <label className="form-label">I am a…</label>
             <div className="home-toggle" role="tablist" aria-label="Role">
-              {(['CLIENT', 'FREELANCER'] as UserRole[]).map((r) => (
+              {(["CLIENT", "FREELANCER"] as UserRole[]).map((r) => (
                 <button
                   key={r}
                   type="button"
-                  className={`home-toggle-btn ${role === r ? 'active' : ''}`}
+                  className={`home-toggle-btn ${role === r ? "active" : ""}`}
                   onClick={() => setRole(r)}
                 >
-                  {r === 'CLIENT' ? 'Client' : 'Freelancer'}
+                  {r === "CLIENT" ? "Client" : "Freelancer"}
                 </button>
               ))}
             </div>
@@ -85,7 +95,7 @@ export default function RegisterPage() {
               className="form-input"
               required
               value={form.name}
-              onChange={set('name')}
+              onChange={set("name")}
             />
           </div>
           <div className="form-group">
@@ -95,7 +105,7 @@ export default function RegisterPage() {
               className="form-input"
               required
               value={form.email}
-              onChange={set('email')}
+              onChange={set("email")}
             />
           </div>
           <div className="form-group">
@@ -106,23 +116,27 @@ export default function RegisterPage() {
               required
               minLength={6}
               value={form.password}
-              onChange={set('password')}
+              onChange={set("password")}
             />
           </div>
-          {role === 'FREELANCER' && (
+          {role === "FREELANCER" && (
             <div className="form-group">
               <label className="form-label">Skills</label>
               <input
                 type="text"
                 className="form-input"
-                required={role === 'FREELANCER'}
+                required={role === "FREELANCER"}
                 value={form.skills}
-                onChange={set('skills')}
+                onChange={set("skills")}
               />
             </div>
           )}
-          <button type="submit" className="btn btn-primary btn-full btn-lg" disabled={loading}>
-            {loading ? 'Creating…' : 'Create Account'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-full btn-lg"
+            disabled={loading}
+          >
+            {loading ? "Creating…" : "Create Account"}
           </button>
         </form>
         <div className="auth-switch">

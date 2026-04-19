@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import HeroSection from './home/HeroSection';
-import StatsBar from './home/StatsBar';
-import FeaturesSection from './home/FeaturesSection';
-import FinalCTA from './home/FinalCTA';
+import React from "react";
+import { Link } from "react-router-dom";
+import HeroSection from "./home/HeroSection";
+import StatsBar from "./home/StatsBar";
+import FeaturesSection from "./home/FeaturesSection";
+import FinalCTA from "./home/FinalCTA";
 
 export default function HomePage() {
   return (
@@ -42,7 +42,9 @@ export default function HomePage() {
             <span className="hp-brand-icon hp-brand-icon-sm">FM</span>
             <span className="hp-brand-text">FreelanceMarket</span>
           </Link>
-          <p className="hp-footer-copy">© 2026 FreelanceMarket. Built for the future of work.</p>
+          <p className="hp-footer-copy">
+            © 2026 FreelanceMarket. Built for the future of work.
+          </p>
           <div className="hp-footer-links">
             <Link to="/login" className="hp-footer-link">
               Login

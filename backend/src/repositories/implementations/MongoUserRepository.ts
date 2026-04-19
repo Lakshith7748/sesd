@@ -1,5 +1,5 @@
-import UserModel, { IUser } from '../../models/User';
-import { IUserRepository } from '../interfaces/IUserRepository';
+import UserModel, { IUser } from "../../models/User";
+import { IUserRepository } from "../interfaces/IUserRepository";
 
 export class MongoUserRepository implements IUserRepository {
   async findById(id: string): Promise<IUser | null> {
@@ -20,6 +20,6 @@ export class MongoUserRepository implements IUserRepository {
   }
 
   async findAll(): Promise<IUser[]> {
-    return UserModel.find().select('-passwordHash').exec();
+    return UserModel.find().select("-passwordHash").exec();
   }
 }

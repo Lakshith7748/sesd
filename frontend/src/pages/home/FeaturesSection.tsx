@@ -1,5 +1,5 @@
-import React from 'react';
-import { features } from './data';
+import React from "react";
+import { features } from "./data";
 
 export default function FeaturesSection() {
   return (
@@ -13,8 +13,8 @@ export default function FeaturesSection() {
             <span className="hp-title-accent">freelance teams</span>
           </h2>
           <p className="hp-section-sub">
-            From posting your first project to managing a team of 100+ freelancers,
-            FreelanceMarket scales with your ambition.
+            From posting your first project to managing a team of 100+
+            freelancers, FreelanceMarket scales with your ambition.
           </p>
         </div>
 
@@ -23,7 +23,7 @@ export default function FeaturesSection() {
             <div
               key={f.title}
               className="hp-feature-card"
-              style={{ '--feature-color': f.color } as React.CSSProperties}
+              style={{ "--feature-color": f.color } as React.CSSProperties}
             >
               <div className="hp-feature-icon" style={{ color: f.color }}>
                 {f.icon}

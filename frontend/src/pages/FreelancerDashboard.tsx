@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import StatusBadge from '../components/StatusBadge';
-import { projectAPI, bidAPI } from '../services/api';
-import { Project, Bid } from '../types';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import StatusBadge from "../components/StatusBadge";
+import { projectAPI, bidAPI } from "../services/api";
+import { Project, Bid } from "../types";
 
 export default function FreelancerDashboard() {
   const [openProjects, setOpenProjects] = useState<Project[]>([]);
@@ -21,7 +21,10 @@ export default function FreelancerDashboard() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [projRes, bidsRes] = await Promise.all([projectAPI.getOpen(), bidAPI.getMine()]);
+      const [projRes, bidsRes] = await Promise.all([
+        projectAPI.getOpen(),
+        bidAPI.getMine(),
+      ]);
       setOpenProjects(projRes.data.data);
       setMyBids(bidsRes.data.data);
     } catch (e) {
@@ -42,7 +45,7 @@ export default function FreelancerDashboard() {
       setBidForm(null);
       loadData();
     } catch (e) {
-      alert('Failed to place bid. You might already have placed one.');
+      alert("Failed to place bid. You might already have placed one.");
     }
   };
 
@@ -58,19 +61,23 @@ export default function FreelancerDashboard() {
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-label">Active Bids</div>
-            <div className="stat-value">{myBids.filter((b) => b.status === 'PENDING').length}</div>
+            <div className="stat-value">
+              {myBids.filter((b) => b.status === "PENDING").length}
+            </div>
           </div>
           <div className="stat-card">
             <div className="stat-label">Accepted Bids</div>
             <div className="stat-value text-success">
-              {myBids.filter((b) => b.status === 'ACCEPTED').length}
+              {myBids.filter((b) => b.status === "ACCEPTED").length}
             </div>
           </div>
         </div>
 
         <div className="section-title mt-6 mb-4">Open Projects</div>
         <div className="projects-grid mb-8">
-          {openProjects.length === 0 && <p className="text-muted">No open projects right now.</p>}
+          {openProjects.length === 0 && (
+            <p className="text-muted">No open projects right now.</p>
+          )}
           {openProjects.map((p) => (
             <div className="project-card" key={p._id}>
               <div className="project-card-header">
@@ -89,7 +96,9 @@ export default function FreelancerDashboard() {
               <div className="project-actions">
                 <button
                   className="btn btn-secondary btn-full"
-                  onClick={() => setBidForm({ projectId: p._id, amount: '', proposal: '' })}
+                  onClick={() =>
+                    setBidForm({ projectId: p._id, amount: "", proposal: "" })
+                  }
                 >
                   Place Bid
                 </button>
@@ -100,12 +109,16 @@ export default function FreelancerDashboard() {
 
         <div className="section-title mb-4">My Bids</div>
         <div className="bids-list">
-          {myBids.length === 0 && <p className="text-muted">You haven't placed any bids.</p>}
+          {myBids.length === 0 && (
+            <p className="text-muted">You haven't placed any bids.</p>
+          )}
           {myBids.map((b) => (
             <div className="bid-row" key={b._id}>
               <div className="bid-info">
                 <div className="flex items-center gap-3">
-                  <div className="bid-freelancer">{(b.projectId as any).title}</div>
+                  <div className="bid-freelancer">
+                    {(b.projectId as any).title}
+                  </div>
                   <StatusBadge status={b.status} />
                 </div>
                 <div className="bid-proposal mt-2">{b.proposal}</div>
@@ -133,7 +146,9 @@ export default function FreelancerDashboard() {
                   className="form-input"
                   required
                   value={bidForm.amount}
-                  onChange={(e) => setBidForm({ ...bidForm, amount: e.target.value })}
+                  onChange={(e) =>
+                    setBidForm({ ...bidForm, amount: e.target.value })
+                  }
                 />
               </div>
               <div className="form-group">
@@ -142,11 +157,17 @@ export default function FreelancerDashboard() {
                   className="form-textarea"
                   required
                   value={bidForm.proposal}
-                  onChange={(e) => setBidForm({ ...bidForm, proposal: e.target.value })}
+                  onChange={(e) =>
+                    setBidForm({ ...bidForm, proposal: e.target.value })
+                  }
                 />
               </div>
               <div className="modal-actions">
-                <button type="button" className="btn btn-ghost" onClick={() => setBidForm(null)}>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => setBidForm(null)}
+                >
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-primary">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { stats } from './data';
+import React from "react";
+import { stats } from "./data";
 
 export default function StatsBar() {
   return (

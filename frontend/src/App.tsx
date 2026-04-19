@@ -1,12 +1,12 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import ClientDashboard from './pages/ClientDashboard';
-import FreelancerDashboard from './pages/FreelancerDashboard';
-import AdminDashboard from './pages/AdminDashboard';
-import { AuthProvider } from './context/AuthContext';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ClientDashboard from "./pages/ClientDashboard";
+import FreelancerDashboard from "./pages/FreelancerDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (

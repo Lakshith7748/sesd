@@ -1,10 +1,13 @@
-import { ClientSession } from 'mongoose';
-import ProjectModel, { IProject } from '../../models/Project';
-import { IProjectRepository } from '../interfaces/IProjectRepository';
-import { ProjectStatus } from '../../types';
+import { ClientSession } from "mongoose";
+import ProjectModel, { IProject } from "../../models/Project";
+import { IProjectRepository } from "../interfaces/IProjectRepository";
+import { ProjectStatus } from "../../types";
 
 export class MongoProjectRepository implements IProjectRepository {
-  async findById(id: string, session?: ClientSession): Promise<IProject | null> {
+  async findById(
+    id: string,
+    session?: ClientSession,
+  ): Promise<IProject | null> {
     return ProjectModel.findById(id)
       .session(session ?? null)
       .exec();
@@ -12,7 +15,7 @@ export class MongoProjectRepository implements IProjectRepository {
 
   async findAllOpen(): Promise<IProject[]> {
     return ProjectModel.find({ status: ProjectStatus.OPEN })
-      .populate('clientId', 'name email')
+      .populate("clientId", "name email")
       .sort({ createdAt: -1 })
       .exec();
   }
@@ -29,9 +32,12 @@ export class MongoProjectRepository implements IProjectRepository {
   async update(
     id: string,
     data: Partial<IProject>,
-    session?: ClientSession
+    session?: ClientSession,
   ): Promise<IProject | null> {
-    return ProjectModel.findByIdAndUpdate(id, data, { new: true, session: session ?? null }).exec();
+    return ProjectModel.findByIdAndUpdate(id, data, {
+      new: true,
+      session: session ?? null,
+    }).exec();
   }
 
   async delete(id: string): Promise<void> {
@@ -40,8 +46,8 @@ export class MongoProjectRepository implements IProjectRepository {
 
   async findAll(): Promise<IProject[]> {
     return ProjectModel.find()
-      .populate('clientId', 'name email')
-      .populate('assignedFreelancerId', 'name email')
+      .populate("clientId", "name email")
+      .populate("assignedFreelancerId", "name email")
       .sort({ createdAt: -1 })
       .exec();
   }

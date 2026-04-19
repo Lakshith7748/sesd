@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema, Types } from 'mongoose';
-import { DisputeStatus } from '../types';
+import mongoose, { Document, Schema, Types } from "mongoose";
+import { DisputeStatus } from "../types";
 
 export interface IDispute extends Document {
   projectId: Types.ObjectId;
@@ -12,14 +12,18 @@ export interface IDispute extends Document {
 
 const DisputeSchema = new Schema<IDispute>(
   {
-    projectId: { type: Schema.Types.ObjectId, ref: 'Project', required: true },
-    raisedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    projectId: { type: Schema.Types.ObjectId, ref: "Project", required: true },
+    raisedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     reason: { type: String, required: true },
-    status: { type: String, enum: Object.values(DisputeStatus), default: DisputeStatus.OPEN },
+    status: {
+      type: String,
+      enum: Object.values(DisputeStatus),
+      default: DisputeStatus.OPEN,
+    },
     resolution: { type: String, default: null },
   },
-  { timestamps: { createdAt: 'createdAt', updatedAt: false } }
+  { timestamps: { createdAt: "createdAt", updatedAt: false } },
 );
 
-const DisputeModel = mongoose.model<IDispute>('Dispute', DisputeSchema);
+const DisputeModel = mongoose.model<IDispute>("Dispute", DisputeSchema);
 export default DisputeModel;

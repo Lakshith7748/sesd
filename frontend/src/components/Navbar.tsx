@@ -1,6 +1,6 @@
-import React from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const { auth, logout } = useAuth();
@@ -8,10 +8,10 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
-  const roleLabel = auth.user?.role ?? '';
+  const roleLabel = auth.user?.role ?? "";
   const roleClass = roleLabel.toLowerCase();
 
   return (
@@ -26,8 +26,11 @@ export default function Navbar() {
           <div className="navbar-actions">
             <div className="navbar-user">
               <div className="navbar-user-dot" />
-              <span>{auth.user.name ?? 'User'}</span>
-              <span className={`badge badge-${roleClass}`} style={{ marginLeft: 4 }}>
+              <span>{auth.user.name ?? "User"}</span>
+              <span
+                className={`badge badge-${roleClass}`}
+                style={{ marginLeft: 4 }}
+              >
                 {roleLabel}
               </span>
             </div>

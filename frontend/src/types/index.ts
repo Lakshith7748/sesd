@@ -1,7 +1,7 @@
-export type UserRole = 'CLIENT' | 'FREELANCER' | 'ADMIN';
-export type ProjectStatus = 'OPEN' | 'ASSIGNED' | 'IN_PROGRESS' | 'COMPLETED';
-export type BidStatus = 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'WITHDRAWN';
-export type DisputeStatus = 'OPEN' | 'UNDER_REVIEW' | 'RESOLVED';
+export type UserRole = "CLIENT" | "FREELANCER" | "ADMIN";
+export type ProjectStatus = "OPEN" | "ASSIGNED" | "IN_PROGRESS" | "COMPLETED";
+export type BidStatus = "PENDING" | "ACCEPTED" | "REJECTED" | "WITHDRAWN";
+export type DisputeStatus = "OPEN" | "UNDER_REVIEW" | "RESOLVED";
 
 export interface User {
   _id: string;

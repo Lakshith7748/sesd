@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import StatusBadge from '../components/StatusBadge';
-import { adminAPI } from '../services/api';
-import { User, Project } from '../types';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import StatusBadge from "../components/StatusBadge";
+import { adminAPI } from "../services/api";
+import { User, Project } from "../types";
 
 export default function AdminDashboard() {
   const [users, setUsers] = useState<User[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [tab, setTab] = useState<'USERS' | 'PROJECTS'>('USERS');
+  const [tab, setTab] = useState<"USERS" | "PROJECTS">("USERS");
 
   useEffect(() => {
     loadData();
@@ -15,7 +15,10 @@ export default function AdminDashboard() {
 
   const loadData = async () => {
     try {
-      const [uRes, pRes] = await Promise.all([adminAPI.getUsers(), adminAPI.getProjects()]);
+      const [uRes, pRes] = await Promise.all([
+        adminAPI.getUsers(),
+        adminAPI.getProjects(),
+      ]);
       setUsers(uRes.data.data);
       setProjects(pRes.data.data);
     } catch (e) {
@@ -29,7 +32,7 @@ export default function AdminDashboard() {
       else await adminAPI.blockUser(user._id);
       loadData();
     } catch (e) {
-      alert('Action failed');
+      alert("Action failed");
     }
   };
 
@@ -44,20 +47,20 @@ export default function AdminDashboard() {
 
         <div className="tabs flex gap-2 mb-6 border-b border-gray-800 pb-2">
           <button
-            className={`btn ${tab === 'USERS' ? 'btn-primary' : 'btn-ghost'}`}
-            onClick={() => setTab('USERS')}
+            className={`btn ${tab === "USERS" ? "btn-primary" : "btn-ghost"}`}
+            onClick={() => setTab("USERS")}
           >
             Users ({users.length})
           </button>
           <button
-            className={`btn ${tab === 'PROJECTS' ? 'btn-primary' : 'btn-ghost'}`}
-            onClick={() => setTab('PROJECTS')}
+            className={`btn ${tab === "PROJECTS" ? "btn-primary" : "btn-ghost"}`}
+            onClick={() => setTab("PROJECTS")}
           >
             Projects ({projects.length})
           </button>
         </div>
 
-        {tab === 'USERS' && (
+        {tab === "USERS" && (
           <div className="table-wrapper">
             <table>
               <thead>
@@ -80,14 +83,16 @@ export default function AdminDashboard() {
                       <StatusBadge status={u.role} />
                     </td>
                     <td>
-                      <StatusBadge status={u.isBlocked ? 'blocked' : 'active'} />
+                      <StatusBadge
+                        status={u.isBlocked ? "blocked" : "active"}
+                      />
                     </td>
                     <td>
                       <button
-                        className={`btn btn-sm ${u.isBlocked ? 'btn-success' : 'btn-danger'}`}
+                        className={`btn btn-sm ${u.isBlocked ? "btn-success" : "btn-danger"}`}
                         onClick={() => handleToggleBlock(u)}
                       >
-                        {u.isBlocked ? 'Unblock' : 'Block'}
+                        {u.isBlocked ? "Unblock" : "Block"}
                       </button>
                     </td>
                   </tr>
@@ -97,7 +102,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {tab === 'PROJECTS' && (
+        {tab === "PROJECTS" && (
           <div className="table-wrapper">
             <table>
               <thead>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { IconArrowRight } from '../../components/Icons';
+import React from "react";
+import { Link } from "react-router-dom";
+import { IconArrowRight } from "../../components/Icons";
 
 export default function FinalCTA() {
   return (
@@ -13,7 +13,8 @@ export default function FinalCTA() {
           and deliver faster?
         </h2>
         <p className="hp-final-sub">
-          Join thousands of teams already using FreelanceMarket to build great products.
+          Join thousands of teams already using FreelanceMarket to build great
+          products.
         </p>
         <div className="hp-final-actions">
           <Link className="btn btn-primary btn-lg hp-cta-btn" to="/register">

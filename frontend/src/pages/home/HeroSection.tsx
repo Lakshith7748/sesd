@@ -1,12 +1,17 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { IconArrowRight } from '../../components/Icons';
-import { activity } from './data';
+import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
+import { IconArrowRight } from "../../components/Icons";
+import { activity } from "./data";
 
 export default function HeroSection() {
   const videoUrl = useMemo(() => {
-    const fromEnv = (import.meta as any)?.env?.VITE_HOME_VIDEO_URL as string | undefined;
-    return fromEnv ?? 'https://cdn.coverr.co/videos/coverr-teamwork-at-the-office-9715/1080p.mp4';
+    const fromEnv = (import.meta as any)?.env?.VITE_HOME_VIDEO_URL as
+      | string
+      | undefined;
+    return (
+      fromEnv ??
+      "https://cdn.coverr.co/videos/coverr-teamwork-at-the-office-9715/1080p.mp4"
+    );
   }, []);
 
   return (
@@ -40,8 +45,9 @@ export default function HeroSection() {
           </h1>
 
           <p className="hp-subtitle">
-            Match with high-signal talent, run transparent bidding, and ship faster — with a
-            clean, modern workflow built for teams that demand excellence.
+            Match with high-signal talent, run transparent bidding, and ship
+            faster — with a clean, modern workflow built for teams that demand
+            excellence.
           </p>
 
           <div className="hp-hero-cta">
@@ -54,7 +60,9 @@ export default function HeroSection() {
             </Link>
           </div>
 
-          <p className="hp-hero-note">No credit card required · Free forever for small teams</p>
+          <p className="hp-hero-note">
+            No credit card required · Free forever for small teams
+          </p>
         </div>
 
         <aside className="hp-hero-card">

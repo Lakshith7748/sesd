@@ -1,5 +1,5 @@
-import DisputeModel, { IDispute } from '../../models/Dispute';
-import { IDisputeRepository } from '../interfaces/IDisputeRepository';
+import DisputeModel, { IDispute } from "../../models/Dispute";
+import { IDisputeRepository } from "../interfaces/IDisputeRepository";
 
 export class MongoDisputeRepository implements IDisputeRepository {
   async findById(id: string): Promise<IDispute | null> {
@@ -21,8 +21,8 @@ export class MongoDisputeRepository implements IDisputeRepository {
 
   async findAll(): Promise<IDispute[]> {
     return DisputeModel.find()
-      .populate('projectId', 'title')
-      .populate('raisedBy', 'name email')
+      .populate("projectId", "title")
+      .populate("raisedBy", "name email")
       .sort({ createdAt: -1 })
       .exec();
   }

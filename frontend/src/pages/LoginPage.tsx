@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { authAPI } from '../services/api';
-import { useAuth } from '../context/AuthContext';
-import AuthSidebar from '../components/AuthSidebar';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { authAPI } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import AuthSidebar from "../components/AuthSidebar";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [form, setForm] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
     try {
       const res = await authAPI.login(form);
       const token: string = res.data.data.token;
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payload = JSON.parse(atob(token.split(".")[1]));
       login(token, payload.name ?? payload.userId);
-      if (payload.role === 'CLIENT') navigate('/client');
-      else if (payload.role === 'FREELANCER') navigate('/freelancer');
-      else navigate('/admin');
+      if (payload.role === "CLIENT") navigate("/client");
+      else if (payload.role === "FREELANCER") navigate("/freelancer");
+      else navigate("/admin");
     } catch (err: any) {
-      setError(err.response?.data?.message ?? 'Login failed');
+      setError(err.response?.data?.message ?? "Login failed");
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,9 @@ export default function LoginPage() {
               className="form-input"
               required
               value={form.email}
-              onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, email: e.target.value }))
+              }
             />
           </div>
           <div className="form-group">
@@ -76,11 +78,17 @@ export default function LoginPage() {
               className="form-input"
               required
               value={form.password}
-              onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, password: e.target.value }))
+              }
             />
           </div>
-          <button type="submit" className="btn btn-primary btn-full btn-lg" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign In'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-full btn-lg"
+            disabled={loading}
+          >
+            {loading ? "Signing in…" : "Sign In"}
           </button>
         </form>
         <div className="auth-switch">

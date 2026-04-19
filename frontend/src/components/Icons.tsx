@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface IconProps {
   size?: number;
@@ -12,7 +12,7 @@ const base = (
   color: string,
   sw: number,
   children: React.ReactNode,
-  className = ''
+  className = "",
 ) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const base = (
 
 export const IconBriefcase = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -46,12 +46,12 @@ export const IconBriefcase = ({
       <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
       <line x1="12" y1="12" x2="12" y2="12" />
     </>,
-    className
+    className,
   );
 
 export const IconTarget = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -64,12 +64,12 @@ export const IconTarget = ({
       <circle cx="12" cy="12" r="6" />
       <circle cx="12" cy="12" r="2" />
     </>,
-    className
+    className,
   );
 
 export const IconCheckCircle = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -81,12 +81,12 @@ export const IconCheckCircle = ({
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
       <polyline points="22 4 12 14.01 9 11.01" />
     </>,
-    className
+    className,
   );
 
 export const IconUserPlus = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -100,12 +100,12 @@ export const IconUserPlus = ({
       <line x1="19" y1="8" x2="19" y2="14" />
       <line x1="22" y1="11" x2="16" y2="11" />
     </>,
-    className
+    className,
   );
 
 export const IconZap = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -116,12 +116,12 @@ export const IconZap = ({
     <>
       <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
     </>,
-    className
+    className,
   );
 
 export const IconShieldCheck = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -133,12 +133,12 @@ export const IconShieldCheck = ({
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       <polyline points="9 12 11 14 15 10" />
     </>,
-    className
+    className,
   );
 
 export const IconBarChart = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -151,12 +151,12 @@ export const IconBarChart = ({
       <line x1="12" y1="20" x2="12" y2="4" />
       <line x1="6" y1="20" x2="6" y2="14" />
     </>,
-    className
+    className,
   );
 
 export const IconUsers = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -170,12 +170,12 @@ export const IconUsers = ({
       <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </>,
-    className
+    className,
   );
 
 export const IconRocket = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -189,12 +189,12 @@ export const IconRocket = ({
       <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
       <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
     </>,
-    className
+    className,
   );
 
 export const IconArrowRight = ({
   size = 18,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 2,
   className,
 }: IconProps) =>
@@ -206,12 +206,12 @@ export const IconArrowRight = ({
       <line x1="5" y1="12" x2="19" y2="12" />
       <polyline points="12 5 19 12 12 19" />
     </>,
-    className
+    className,
   );
 
 export const IconDollarSign = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -223,12 +223,12 @@ export const IconDollarSign = ({
       <line x1="12" y1="1" x2="12" y2="23" />
       <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
     </>,
-    className
+    className,
   );
 
 export const IconGlobe = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -241,12 +241,12 @@ export const IconGlobe = ({
       <line x1="2" y1="12" x2="22" y2="12" />
       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
     </>,
-    className
+    className,
   );
 
 export const IconServer = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -260,12 +260,12 @@ export const IconServer = ({
       <line x1="6" y1="6" x2="6.01" y2="6" />
       <line x1="6" y1="18" x2="6.01" y2="18" />
     </>,
-    className
+    className,
   );
 
 export const IconActivity = ({
   size = 20,
-  color = 'currentColor',
+  color = "currentColor",
   strokeWidth = 1.8,
   className,
 }: IconProps) =>
@@ -276,5 +276,5 @@ export const IconActivity = ({
     <>
       <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
     </>,
-    className
+    className,
   );

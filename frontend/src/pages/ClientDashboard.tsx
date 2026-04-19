@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import StatusBadge from '../components/StatusBadge';
-import { projectAPI } from '../services/api';
-import { Project, Bid } from '../types';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import StatusBadge from "../components/StatusBadge";
+import { projectAPI } from "../services/api";
+import { Project, Bid } from "../types";
 
 export default function ClientDashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -10,7 +10,12 @@ export default function ClientDashboard() {
   const [loading, setLoading] = useState(true);
 
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: '', description: '', budget: '', deadline: '' });
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    budget: "",
+    deadline: "",
+  });
 
   useEffect(() => {
     loadProjects();
@@ -23,7 +28,7 @@ export default function ClientDashboard() {
       setProjects(res.data.data);
       // Load bids for OPEN or ASSIGNED projects
       for (const p of res.data.data) {
-        if (p.status !== 'COMPLETED') {
+        if (p.status !== "COMPLETED") {
           const bRes = await projectAPI.getBids(p._id);
           setBids((prev) => ({ ...prev, [p._id]: bRes.data.data }));
         }
@@ -40,10 +45,10 @@ export default function ClientDashboard() {
     try {
       await projectAPI.create({ ...form, budget: Number(form.budget) });
       setShowForm(false);
-      setForm({ title: '', description: '', budget: '', deadline: '' });
+      setForm({ title: "", description: "", budget: "", deadline: "" });
       loadProjects();
     } catch (e) {
-      console.error('Failed to post project');
+      console.error("Failed to post project");
     }
   };
 
@@ -52,7 +57,7 @@ export default function ClientDashboard() {
       await projectAPI.acceptBid(pId, bId);
       loadProjects();
     } catch (e) {
-      alert('Failed to accept bid');
+      alert("Failed to accept bid");
     }
   };
 
@@ -61,7 +66,7 @@ export default function ClientDashboard() {
       await projectAPI.markComplete(pId);
       loadProjects();
     } catch (e) {
-      alert('Failed to mark complete');
+      alert("Failed to mark complete");
     }
   };
 
@@ -74,8 +79,11 @@ export default function ClientDashboard() {
             <h1>Client Dashboard</h1>
             <p>Manage your projects and review bids</p>
           </div>
-          <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-            {showForm ? 'Cancel' : '+ Post Project'}
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowForm(!showForm)}
+          >
+            {showForm ? "Cancel" : "+ Post Project"}
           </button>
         </div>
 
@@ -85,24 +93,32 @@ export default function ClientDashboard() {
             <form
               onSubmit={handlePost}
               className="form-group"
-              style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 16,
+              }}
             >
-              <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+              <div className="form-group" style={{ gridColumn: "1 / -1" }}>
                 <label className="form-label">Title</label>
                 <input
                   className="form-input"
                   required
                   value={form.title}
-                  onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, title: e.target.value }))
+                  }
                 />
               </div>
-              <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+              <div className="form-group" style={{ gridColumn: "1 / -1" }}>
                 <label className="form-label">Description</label>
                 <textarea
                   className="form-textarea"
                   required
                   value={form.description}
-                  onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, description: e.target.value }))
+                  }
                 />
               </div>
               <div className="form-group">
@@ -112,7 +128,9 @@ export default function ClientDashboard() {
                   className="form-input"
                   required
                   value={form.budget}
-                  onChange={(e) => setForm((f) => ({ ...f, budget: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, budget: e.target.value }))
+                  }
                 />
               </div>
               <div className="form-group">
@@ -122,10 +140,12 @@ export default function ClientDashboard() {
                   className="form-input"
                   required
                   value={form.deadline}
-                  onChange={(e) => setForm((f) => ({ ...f, deadline: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, deadline: e.target.value }))
+                  }
                 />
               </div>
-              <div style={{ gridColumn: '1 / -1', marginTop: 8 }}>
+              <div style={{ gridColumn: "1 / -1", marginTop: 8 }}>
                 <button type="submit" className="btn btn-primary">
                   Post Project
                 </button>
@@ -155,18 +175,23 @@ export default function ClientDashboard() {
                     Budget: <strong>${p.budget}</strong>
                   </span>
                   <span className="project-meta-item">
-                    Due: <strong>{new Date(p.deadline).toLocaleDateString()}</strong>
+                    Due:{" "}
+                    <strong>{new Date(p.deadline).toLocaleDateString()}</strong>
                   </span>
                 </div>
 
-                {p.status === 'OPEN' && projectBids.length > 0 && (
+                {p.status === "OPEN" && projectBids.length > 0 && (
                   <div className="bids-list mt-4 flex-col gap-2">
                     <p className="form-label">Recent Bids</p>
                     {projectBids.map((b) => (
                       <div className="bid-row" key={b._id}>
                         <div className="bid-info">
-                          <div className="bid-freelancer">{(b.freelancerId as any).name}</div>
-                          <div className="bid-amount text-accent">${b.amount}</div>
+                          <div className="bid-freelancer">
+                            {(b.freelancerId as any).name}
+                          </div>
+                          <div className="bid-amount text-accent">
+                            ${b.amount}
+                          </div>
                         </div>
                         <button
                           className="btn btn-success btn-sm"
@@ -179,11 +204,11 @@ export default function ClientDashboard() {
                   </div>
                 )}
 
-                {p.status === 'OPEN' && projectBids.length === 0 && (
+                {p.status === "OPEN" && projectBids.length === 0 && (
                   <div className="mt-4 text-muted">No bids yet.</div>
                 )}
 
-                {p.status === 'ASSIGNED' && (
+                {p.status === "ASSIGNED" && (
                   <div className="project-actions">
                     <button
                       className="btn btn-primary btn-full"
